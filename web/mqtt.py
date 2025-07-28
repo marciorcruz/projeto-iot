@@ -1,8 +1,8 @@
 import os
 import json
 import paho.mqtt.client as mqtt
-from .database import SessionLocal
-from .models import Telemetry
+from database import SessionLocal
+from models import Telemetry
 
 broker = os.getenv("MQTT_BROKER", "localhost")
 port = int(os.getenv("MQTT_PORT", 1883))
@@ -31,7 +31,7 @@ def on_message(client, userdata, msg):
         print("Error saving data:", e)
 
 def start_mqtt():
-    client = mqtt.Client()
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
     client.on_connect = on_connect
     client.on_message = on_message
 

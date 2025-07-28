@@ -8,7 +8,7 @@ broker = os.getenv("MQTT_BROKER", "localhost")
 port = int(os.getenv("MQTT_PORT", 1883))
 topic = "devices/device123/telemetry"
 
-client = mqtt.Client()
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
 client.connect(broker, port, 60)
 
 # ✅ Importante: inicia o loop de rede
