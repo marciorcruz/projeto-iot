@@ -1,0 +1,59 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual env
+.venv/
+env/
+venv/
+
+# Logs
+*.log
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+
+# pip
+pip-wheel-metadata/
+*.egg-info/
+.eggs/
+
+# Test output
+htmlcov/
+coverage.*
+.tox/
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Docker
+*.tar
+*.bak
+docker-compose.override.yml
+
+# System artifacts
+*.swp
+*~
+
+# Ignore Python dotenv secrets
+.env
+.env.*
+
+# Ignore built docker images
+*.img
+
+# Ignore requirements lock (optional)
+poetry.lock
+Pipfile.lock

@@ -1,8 +1,12 @@
 FROM python:3.11-slim
 
 WORKDIR /app
-COPY simulator.py .
 
-RUN pip install paho-mqtt
+COPY requirements.txt .
+
+# ✅ Remove o cache do pip + força upgrade
+RUN pip install --no-cache-dir --force-reinstall -r requirements.txt
+
+COPY simulator.py .
 
 CMD ["python", "simulator.py"]

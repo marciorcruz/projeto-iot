@@ -11,7 +11,10 @@ topic = "devices/device123/telemetry"
 client = mqtt.Client()
 client.connect(broker, port, 60)
 
-print(f"Connected to MQTT broker at {broker}:{port}")
+# ✅ Importante: inicia o loop de rede
+client.loop_start()
+
+print(f"✅ Connected to MQTT broker at {broker}:{port}")
 
 while True:
     data = {
@@ -21,6 +24,12 @@ while True:
         "timestamp": time.time()
     }
 
-    client.publish(topic, json.dumps(data))
-    print(f"Published: {data}")
+    result = client.publish(topic, json.dumps(data))
+    status = result[0]
+
+    if status == 0:
+        print(f"📡 Published: {data}")
+    else:
+        print("❌ Failed to send message")
+
     time.sleep(5)
