@@ -32,4 +32,4 @@ while True:
     else:
         print("❌ Failed to send message")
 
-    time.sleep(5)
+    time.sleep(20)

@@ -1,6 +1,32 @@
 version: "3.8"
 
 services:
+  postgres:
+    container_name: postgres-iot
+    image: postgres:15
+    environment:
+      POSTGRES_DB: iot
+      POSTGRES_USER: iotuser
+      POSTGRES_PASSWORD: iotpass
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "15432:5432"
+  web:
+    build: 
+      dockerfile: Dockerfile
+      context: ./web
+    environment:
+      - DATABASE_URL=postgresql://iotuser:iotpass@postgres:5432/iot
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+      - MQTT_TOPIC=devices/device123/telemetry
+    depends_on:
+      - postgres
+      - mosquitto
+    ports:
+      - "8000:8000"
+  
   mosquitto:
     image: eclipse-mosquitto
     container_name: mosquitto
@@ -23,4 +49,5 @@ services:
       - MQTT_PORT=1883
     restart: on-failure
 
-  
+volumes:
+  pgdata:
