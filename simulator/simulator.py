@@ -6,7 +6,8 @@ import paho.mqtt.client as mqtt
 
 broker = os.getenv("MQTT_BROKER", "localhost")
 port = int(os.getenv("MQTT_PORT", 1883))
-topic = "devices/device123/telemetry"
+device_id = os.getenv("MQTT_DEVICE_ID", "device123")
+topic = f"devices/{device_id}/telemetry"
 
 client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION1)
 client.connect(broker, port, 60)
@@ -20,7 +21,7 @@ while True:
     data = {
         "temperature": round(random.uniform(20.0, 30.0), 2),
         "humidity": round(random.uniform(30.0, 60.0), 2),
-        "device_id": "device123",
+        "device_id": device_id,
         "timestamp": time.time()
     }
 

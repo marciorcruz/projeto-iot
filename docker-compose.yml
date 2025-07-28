@@ -20,7 +20,6 @@ services:
       - DATABASE_URL=postgresql://iotuser:iotpass@postgres:5432/iot
       - MQTT_BROKER=mosquitto
       - MQTT_PORT=1883
-      - MQTT_TOPIC=devices/device123/telemetry
     depends_on:
       - postgres
       - mosquitto
@@ -47,6 +46,20 @@ services:
     environment:
       - MQTT_BROKER=mosquitto
       - MQTT_PORT=1883
+    restart: on-failure
+
+
+  simulator-2:
+    build: 
+       dockerfile: Dockerfile
+       context: ./simulator
+    container_name: simulator-2
+    depends_on:
+      - mosquitto
+    environment:
+      - MQTT_BROKER=mosquitto
+      - MQTT_PORT=1883
+      - MQTT_DEVICE_ID=device456
     restart: on-failure
 
 volumes:

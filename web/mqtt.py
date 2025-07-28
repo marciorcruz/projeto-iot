@@ -6,11 +6,14 @@ from models import Telemetry
 
 broker = os.getenv("MQTT_BROKER", "localhost")
 port = int(os.getenv("MQTT_PORT", 1883))
-topic = os.getenv("MQTT_TOPIC", "devices/device123/telemetry")
 
 def on_connect(client, userdata, flags, rc):
     print("Connected to MQTT broker with result code", rc)
-    client.subscribe(topic)
+    topics = [
+        "devices/device123/telemetry",
+        "devices/device456/telemetry",    ]
+    for t in topics:
+        client.subscribe(t)
 
 def on_message(client, userdata, msg):
     try:
