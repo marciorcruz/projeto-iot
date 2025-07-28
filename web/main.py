@@ -21,9 +21,9 @@ def read_root():
     return {"message": "IoT Web Receiver Online", "status": "running"}
 
 @app.get("/telemetry")
-def get_telemetry(limit: int = 10, db: Session = Depends(get_db)):
+def get_telemetry(device_id: str | None = None, limit: int = 10, db: Session = Depends(get_db)):
     """Retorna os últimos dados de telemetria"""
-    telemetry_data = db.query(models.Telemetry).order_by(models.Telemetry.timestamp.desc()).limit(limit).all()
+    telemetry_data = db.query(models.Telemetry).filter(models.Telemetry.device_id == device_id).order_by(models.Telemetry.timestamp.desc()).limit(limit).all() if device_id else db.query(models.Telemetry).order_by(models.Telemetry.timestamp.desc()).limit(limit).all()
     return {
         "count": len(telemetry_data),
         "data": [
